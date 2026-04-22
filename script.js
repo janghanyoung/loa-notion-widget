@@ -12,7 +12,7 @@ async function loadData() {
     setText("date", data.date || "");
     setText("headline", data.headline || "");
     setText("summary", data.summary || "");
-    setText("subhead", data.subhead || "모험 · 일정 · 수집");
+    setText("subhead", data.subhead || "모험 · 일정 · 캐릭터");
 
     const briefList = document.getElementById("brief-list");
     if (briefList) {
@@ -90,18 +90,6 @@ async function loadData() {
         columnsEl.appendChild(article);
       });
     }
-
-    const footerEl = document.getElementById("footer");
-    if (footerEl) {
-      footerEl.innerHTML = "";
-
-      (data.footer || []).forEach((line) => {
-        const box = document.createElement("div");
-        box.className = "bottom-box";
-        box.innerHTML = `<p>${escapeHtml(line)}</p>`;
-        footerEl.appendChild(box);
-      });
-    }
   } catch (error) {
     console.error(error);
 
@@ -119,8 +107,6 @@ function setText(id, value) {
   const el = document.getElementById(id);
   if (el) {
     el.textContent = value;
-  } else {
-    console.warn(`id="${id}" 요소가 없습니다.`);
   }
 }
 
@@ -133,4 +119,8 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-loadData();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", loadData);
+} else {
+  loadData();
+}
