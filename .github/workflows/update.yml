@@ -2,29 +2,38 @@ name: Update Daily JSON
 
 on:
   schedule:
-    - cron: "0 23 * * *"  # 한국 기준 오전 8시
+    - cron: "0 23 * * *"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      LOA_API_KEY: ${{ secrets.LOA_API_KEY }}
+
+    permissions:
+      contents: write
+
     steps:
-      - name: 코드 가져오기
-        uses: actions/checkout@v3
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v5
 
       - name: 파이썬 설치
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
-      - name: 스크립트 실행
+      - name: requests 설치
+        run: python -m pip install --upgrade pip requests
+
+      - name: daily.json 생성
         run: python build_data.py
 
-      - name: 변경사항 커밋
+      - name: 변경사항 커밋 및 푸시
         run: |
           git config --global user.name "auto-bot"
-          git config --global user.email "auto@bot.com"
+          git config --global user.email "auto-bot@users.noreply.github.com"
           git add daily.json
           git commit -m "auto update daily.json" || echo "no changes"
           git push
