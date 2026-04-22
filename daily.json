@@ -1,41 +1,91 @@
 {
-  "title": "아크라시아 일보",
-  "date": "2026-04-22",
-  "subhead": "모험 · 일정 · 캐릭터",
-  "headline": "오늘의 아크라시아 일정과 개인 기록",
-  "summary": "오늘 해야 할 콘텐츠와 대표 캐릭터 상태를 한눈에 정리합니다.",
-  "briefs": [
-    "오늘 섬 콘텐츠 확인",
-    "대표 캐릭터 정보 갱신",
-    "주요 이벤트 우선순위 정리"
+  "paperTitle": "노이호이테 일보",
+  "metaLeft": "VOL. 2026-04-22 TUE",
+  "metaCenter": "발행처 | 아크라시아 연합 정보국",
+  "metaRight": "발행일 | 2026.04.22 (화)",
+  "mainHeadline": "이제 칭호도 스타일이다! 대신 파이썬을쓰는자",
+  "sideHeadline": "[단독] 식목일 맞이! 오늘의 모험섬 핫이슈",
+  "character": {
+    "image": "https://placehold.co/420x560?text=%ED%8C%8C%EC%9D%B4%EC%8D%AC%EC%9D%84%EC%93%B0%EB%8A%94%EC%9E%90",
+    "nameplate": "파이썬을쓰는자",
+    "subplate": "루페온 | 도화가 | Lv.70"
+  },
+  "profileStats": [
+    { "label": "아이템 레벨", "value": "1662.50" },
+    { "label": "투력", "value": "3640.21" },
+    { "label": "아크 그리드", "value": "162P" },
+    { "label": "원정대 레벨", "value": "325" },
+    { "label": "PVP 등급", "value": "20급" },
+    { "label": "공격력", "value": "121,856" },
+    { "label": "최대 생명력", "value": "178,314" },
+    { "label": "치명", "value": "662" },
+    { "label": "특화", "value": "1832" },
+    { "label": "제압", "value": "70" },
+    { "label": "신속", "value": "69" },
+    { "label": "인내", "value": "66" },
+    { "label": "숙련", "value": "66" }
   ],
-  "columns": [
-    {
-      "tag": "01 TODAY",
-      "title": "오늘의 콘텐츠",
-      "body": "모험섬, 카오스게이트, 필드보스 일정 확인.\n우선순위는 모험섬 → 일일 숙제.",
-      "highlight": "오늘 목표: 모험섬 1회"
-    },
-    {
-      "tag": "02 CHARACTER",
-      "title": "대표 캐릭터",
-      "stats": [
-        { "name": "이름", "value": "플라체" },
-        { "name": "직업", "value": "도화가" },
-        { "name": "서버", "value": "루페온" },
-        { "name": "아이템레벨", "value": "1600.00" }
-      ],
-      "extra_body": "대표 캐릭터 기준 상태 요약."
-    },
-    {
-      "tag": "03 MEMO",
-      "title": "메모",
-      "quote": "오늘 안 하면 내일도 미룰 가능성이 높다.",
-      "todos": [
-        "daily.json 반영 확인",
-        "대표 캐릭터 점검",
-        "오늘 이벤트 체크"
-      ]
-    }
-  ]
+  "equipmentStats": [
+    { "label": "무기", "value": "+25 운명의 심자가" },
+    { "label": "방어구", "value": "+22 고대" },
+    { "label": "장신구", "value": "고대 (품질 95↑)" },
+    { "label": "팔찌", "value": "고대 (특화 117%)" },
+    { "label": "엘릭서", "value": "합계 50" },
+    { "label": "초월", "value": "126" },
+    { "label": "연성 레벨", "value": "40" },
+    { "label": "각인", "value": "구슬동자 3 / 전문의 3 / 아드레날린 3 / 각성 3 / 위기 모면 1" },
+    { "label": "보석", "value": "T4 9멸 / T3 10홍" },
+    { "label": "카드", "value": "세상을 구하는 빛 30각" },
+    { "label": "아크 패시브", "value": "진화 120 / 깨달음 90" },
+    { "label": "실링", "value": "28,451,218" },
+    { "label": "골드", "value": "1,245,730" },
+    { "label": "원정대 영지", "value": "Lv.70 (활발)" }
+  ],
+  "lookbook": [
+    { "name": "순백의 천사", "part": "전신", "color": "#FFFFFF", "avgPrice": "150,000골", "lowestPrice": "130,000골" },
+    { "name": "검은 달의 기사", "part": "전신", "color": "#1A1A1A", "avgPrice": "180,000골", "lowestPrice": "160,000골" },
+    { "name": "설원의 귀족", "part": "전신", "color": "#EAEAEA", "avgPrice": "118,000골", "lowestPrice": "100,000골" },
+    { "name": "아크라시아 여행자", "part": "전신", "color": "#DCD6C4", "avgPrice": "95,000골", "lowestPrice": "80,000골" },
+    { "name": "비밀의 서약", "part": "전신", "color": "#7B4E9B", "avgPrice": "210,000골", "lowestPrice": "185,000골" },
+    { "name": "노블레스 드레스", "part": "전신", "color": "#F4E5C2", "avgPrice": "130,000골", "lowestPrice": "110,000골" }
+  ],
+  "islandArticle": {
+    "image": "https://placehold.co/520x260?text=%EC%98%A4%EB%8A%98%EC%9D%98+%EB%AA%A8%ED%97%98%EC%84%AC",
+    "todayIslands": [
+      "두키 섬",
+      "환상의 섬",
+      "해적 주화 섬",
+      "고요한 안식의 섬",
+      "비밀 기지 X-301",
+      "토토피아"
+    ],
+    "remainingRaids": [
+      "카제로스 레이드 2막",
+      "카제로스 레이드 3막",
+      "에기르 하드",
+      "베히모스 하드",
+      "아브렐슈드 하드",
+      "쿠크세이튼 하드"
+    ],
+    "quote": "모험은 아직 끝나지 않았다.\n아직 가보지 않은 곳이\n아크라시아의 절반이다."
+  },
+  "market": {
+    "island": [
+      "오늘의 모험섬! 놓치지 마세요!",
+      "두키 섬 / 환상의 섬 / 토토피아",
+      "고요한 안식의 섬 외 다수!",
+      "보상과 낭만이 가득한 하루 되세요~"
+    ],
+    "events": [
+      "NEW! 아크라시아 대축제 진행 중!",
+      "카드팩, 엘릭서, 아바타 상자 등 풍성한 보상 획득 찬스!",
+      "이벤트는 사랑입니다 ♥"
+    ],
+    "guild": [
+      "《길드원 구해요! 오늘도 대환장》",
+      "레이드 같이 가실 분 / 모험섬 같이 도실 분",
+      "디스코드 필수 / 텐션 필수 / 애인 필수는 아님",
+      "같이 웃고 떠들 모험가 구합니다!"
+    ]
+  }
 }
