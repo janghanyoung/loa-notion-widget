@@ -9,21 +9,42 @@
 <body>
   <div class="paper-shell">
     <main class="paper">
-
       <header class="masthead">
-        <h1 id="title">로딩 중...</h1>
-        <div id="date"></div>
+        <div class="masthead-top">
+          <span class="edition">VOL. 01</span>
+          <span class="paper-note">ARKRASIA DAILY JOURNAL</span>
+          <span class="price">NOT FOR SALE</span>
+        </div>
+
+        <h1 id="title" class="paper-title">로딩 중...</h1>
+
+        <div class="masthead-bottom">
+          <span id="date">날짜 로딩 중...</span>
+          <span id="subhead">모험 · 일정 · 수집</span>
+          <span>Notion Widget Edition</span>
+        </div>
       </header>
 
       <section class="hero">
-        <h2 id="headline"></h2>
-        <p id="summary"></p>
+        <div class="hero-main">
+          <p class="section-label">HEADLINE</p>
+          <h2 id="headline" class="hero-title">헤드라인 로딩 중...</h2>
+          <p id="summary" class="hero-summary">요약 로딩 중...</p>
+        </div>
+
+        <aside class="hero-side">
+          <div class="brief-box">
+            <p class="brief-title">오늘의 속보</p>
+            <ul id="brief-list">
+              <li>데이터 로딩 중...</li>
+            </ul>
+          </div>
+        </aside>
       </section>
 
       <section id="columns" class="content-grid"></section>
 
       <section id="footer" class="bottom-strip"></section>
-
     </main>
   </div>
 
