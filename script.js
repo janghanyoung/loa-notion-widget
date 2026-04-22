@@ -1,71 +1,119 @@
 async function loadData() {
-  const res = await fetch("./daily.json");
-  const data = await res.json();
+  try {
+    const res = await fetch("./daily.json", { cache: "no-store" });
 
-  // 상단
-  document.getElementById("title").textContent = data.title;
-  document.getElementById("date").textContent = data.date;
-  document.getElementById("headline").textContent = data.headline;
-  document.getElementById("summary").textContent = data.summary;
-
-  // 본문
-  const columnsEl = document.getElementById("columns");
-  columnsEl.innerHTML = "";
-
-  data.columns.forEach(col => {
-    const el = document.createElement("article");
-    el.className = "news-column";
-
-    let inner = `
-      <p class="column-tag">${col.tag}</p>
-      <h3 class="column-title">${col.title}</h3>
-    `;
-
-    if (col.body) {
-      inner += `<p>${col.body.replace(/\n/g, "<br>")}</p>`;
+    if (!res.ok) {
+      throw new Error(`daily.json 로드 실패: ${res.status}`);
     }
 
-    if (col.highlight) {
-      inner += `<div class="mini-card">${col.highlight}</div>`;
+    const data = await res.json();
+
+    document.getElementById("title").textContent = data.title || "아크라시아 일보";
+    document.getElementById("date").textContent = data.date || "";
+    document.getElementById("headline").textContent = data.headline || "";
+    document.getElementById("summary").textContent = data.summary || "";
+    document.getElementById("subhead").textContent = data.subhead || "모험 · 일정 · 수집";
+
+    const briefList = document.getElementById("brief-list");
+    briefList.innerHTML = "";
+
+    (data.briefs || []).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      briefList.appendChild(li);
+    });
+
+    if (!data.briefs || data.briefs.length === 0) {
+      const li = document.createElement("li");
+      li.textContent = "오늘의 짧은 요약이 없습니다.";
+      briefList.appendChild(li);
     }
 
-    if (col.stats) {
-      col.stats.forEach(s => {
-        inner += `
-          <div class="stat-item">
-            <span>${s.name}</span>
-            <span>${s.value}</span>
+    const columnsEl = document.getElementById("columns");
+    columnsEl.innerHTML = "";
+
+    (data.columns || []).forEach((col) => {
+      const article = document.createElement("article");
+      article.className = "news-column";
+
+      let html = `
+        <p class="column-tag">${escapeHtml(col.tag || "")}</p>
+        <h3 class="column-title">${escapeHtml(col.title || "")}</h3>
+      `;
+
+      if (col.body) {
+        html += `<p>${escapeHtml(col.body).replace(/\n/g, "<br>")}</p>`;
+      }
+
+      if (col.highlight) {
+        html += `
+          <div class="mini-card">
+            <p class="mini-card-label">CHECK</p>
+            <p class="mini-card-text">${escapeHtml(col.highlight)}</p>
           </div>
         `;
-      });
-    }
+      }
 
-    if (col.todos) {
-      inner += `<ul class="todo-list">`;
-      col.todos.forEach(t => {
-        inner += `<li>${t}</li>`;
-      });
-      inner += `</ul>`;
-    }
+      if (Array.isArray(col.stats) && col.stats.length > 0) {
+        html += `<div class="stat-list">`;
+        col.stats.forEach((s) => {
+          html += `
+            <div class="stat-item">
+              <span class="stat-name">${escapeHtml(s.name || "")}</span>
+              <span class="stat-value">${escapeHtml(s.value || "")}</span>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
 
-    if (col.quote) {
-      inner += `<blockquote>${col.quote}</blockquote>`;
-    }
+      if (col.extra_body) {
+        html += `<p>${escapeHtml(col.extra_body).replace(/\n/g, "<br>")}</p>`;
+      }
 
-    el.innerHTML = inner;
-    columnsEl.appendChild(el);
-  });
+      if (col.quote) {
+        html += `<blockquote class="quote-box">${escapeHtml(col.quote)}</blockquote>`;
+      }
 
-  // footer
-  const footerEl = document.getElementById("footer");
-  footerEl.innerHTML = "";
+      if (Array.isArray(col.todos) && col.todos.length > 0) {
+        html += `<ul class="todo-list">`;
+        col.todos.forEach((todo) => {
+          html += `<li>${escapeHtml(todo)}</li>`;
+        });
+        html += `</ul>`;
+      }
 
-  data.footer.forEach(line => {
-    const div = document.createElement("div");
-    div.className = "bottom-box";
-    div.textContent = line;
-    footerEl.appendChild(div);
-  });
+      article.innerHTML = html;
+      columnsEl.appendChild(article);
+    });
+
+    const footerEl = document.getElementById("footer");
+    footerEl.innerHTML = "";
+
+    (data.footer || []).forEach((line) => {
+      const box = document.createElement("div");
+      box.className = "bottom-box";
+      box.innerHTML = `<p>${escapeHtml(line)}</p>`;
+      footerEl.appendChild(box);
+    });
+  } catch (error) {
+    console.error(error);
+
+    const paper = document.querySelector(".paper");
+    const errorBox = document.createElement("div");
+    errorBox.className = "error-box";
+    errorBox.textContent = `위젯 로딩 실패: ${error.message}`;
+    paper.appendChild(errorBox);
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 loadData();
