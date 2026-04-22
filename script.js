@@ -8,102 +8,119 @@ async function loadData() {
 
     const data = await res.json();
 
-    document.getElementById("title").textContent = data.title || "아크라시아 일보";
-    document.getElementById("date").textContent = data.date || "";
-    document.getElementById("headline").textContent = data.headline || "";
-    document.getElementById("summary").textContent = data.summary || "";
-    document.getElementById("subhead").textContent = data.subhead || "모험 · 일정 · 수집";
+    setText("title", data.title || "아크라시아 일보");
+    setText("date", data.date || "");
+    setText("headline", data.headline || "");
+    setText("summary", data.summary || "");
+    setText("subhead", data.subhead || "모험 · 일정 · 수집");
 
     const briefList = document.getElementById("brief-list");
-    briefList.innerHTML = "";
+    if (briefList) {
+      briefList.innerHTML = "";
 
-    (data.briefs || []).forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      briefList.appendChild(li);
-    });
+      (data.briefs || []).forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        briefList.appendChild(li);
+      });
 
-    if (!data.briefs || data.briefs.length === 0) {
-      const li = document.createElement("li");
-      li.textContent = "오늘의 짧은 요약이 없습니다.";
-      briefList.appendChild(li);
+      if (!data.briefs || data.briefs.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "오늘의 짧은 요약이 없습니다.";
+        briefList.appendChild(li);
+      }
     }
 
     const columnsEl = document.getElementById("columns");
-    columnsEl.innerHTML = "";
+    if (columnsEl) {
+      columnsEl.innerHTML = "";
 
-    (data.columns || []).forEach((col) => {
-      const article = document.createElement("article");
-      article.className = "news-column";
+      (data.columns || []).forEach((col) => {
+        const article = document.createElement("article");
+        article.className = "news-column";
 
-      let html = `
-        <p class="column-tag">${escapeHtml(col.tag || "")}</p>
-        <h3 class="column-title">${escapeHtml(col.title || "")}</h3>
-      `;
-
-      if (col.body) {
-        html += `<p>${escapeHtml(col.body).replace(/\n/g, "<br>")}</p>`;
-      }
-
-      if (col.highlight) {
-        html += `
-          <div class="mini-card">
-            <p class="mini-card-label">CHECK</p>
-            <p class="mini-card-text">${escapeHtml(col.highlight)}</p>
-          </div>
+        let html = `
+          <p class="column-tag">${escapeHtml(col.tag || "")}</p>
+          <h3 class="column-title">${escapeHtml(col.title || "")}</h3>
         `;
-      }
 
-      if (Array.isArray(col.stats) && col.stats.length > 0) {
-        html += `<div class="stat-list">`;
-        col.stats.forEach((s) => {
+        if (col.body) {
+          html += `<p>${escapeHtml(col.body).replace(/\n/g, "<br>")}</p>`;
+        }
+
+        if (col.highlight) {
           html += `
-            <div class="stat-item">
-              <span class="stat-name">${escapeHtml(s.name || "")}</span>
-              <span class="stat-value">${escapeHtml(s.value || "")}</span>
+            <div class="mini-card">
+              <p class="mini-card-label">CHECK</p>
+              <p class="mini-card-text">${escapeHtml(col.highlight)}</p>
             </div>
           `;
-        });
-        html += `</div>`;
-      }
+        }
 
-      if (col.extra_body) {
-        html += `<p>${escapeHtml(col.extra_body).replace(/\n/g, "<br>")}</p>`;
-      }
+        if (Array.isArray(col.stats) && col.stats.length > 0) {
+          html += `<div class="stat-list">`;
+          col.stats.forEach((s) => {
+            html += `
+              <div class="stat-item">
+                <span class="stat-name">${escapeHtml(s.name || "")}</span>
+                <span class="stat-value">${escapeHtml(s.value || "")}</span>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        }
 
-      if (col.quote) {
-        html += `<blockquote class="quote-box">${escapeHtml(col.quote)}</blockquote>`;
-      }
+        if (col.extra_body) {
+          html += `<p>${escapeHtml(col.extra_body).replace(/\n/g, "<br>")}</p>`;
+        }
 
-      if (Array.isArray(col.todos) && col.todos.length > 0) {
-        html += `<ul class="todo-list">`;
-        col.todos.forEach((todo) => {
-          html += `<li>${escapeHtml(todo)}</li>`;
-        });
-        html += `</ul>`;
-      }
+        if (col.quote) {
+          html += `<blockquote class="quote-box">${escapeHtml(col.quote)}</blockquote>`;
+        }
 
-      article.innerHTML = html;
-      columnsEl.appendChild(article);
-    });
+        if (Array.isArray(col.todos) && col.todos.length > 0) {
+          html += `<ul class="todo-list">`;
+          col.todos.forEach((todo) => {
+            html += `<li>${escapeHtml(todo)}</li>`;
+          });
+          html += `</ul>`;
+        }
+
+        article.innerHTML = html;
+        columnsEl.appendChild(article);
+      });
+    }
 
     const footerEl = document.getElementById("footer");
-    footerEl.innerHTML = "";
+    if (footerEl) {
+      footerEl.innerHTML = "";
 
-    (data.footer || []).forEach((line) => {
-      const box = document.createElement("div");
-      box.className = "bottom-box";
-      box.innerHTML = `<p>${escapeHtml(line)}</p>`;
-      footerEl.appendChild(box);
-    });
+      (data.footer || []).forEach((line) => {
+        const box = document.createElement("div");
+        box.className = "bottom-box";
+        box.innerHTML = `<p>${escapeHtml(line)}</p>`;
+        footerEl.appendChild(box);
+      });
+    }
   } catch (error) {
     console.error(error);
 
     const paper = document.querySelector(".paper");
-    const errorBox = document.createElement("div");
-    errorBox.className = "error-box";
-    errorBox.textContent = `위젯 로딩 실패: ${error.message}`;
-    paper.appendChild(errorBox);
+    if (paper) {
+      const errorBox = document.createElement("div");
+      errorBox.className = "error-box";
+      errorBox.textContent = `위젯 로딩 실패: ${error.message}`;
+      paper.appendChild(errorBox);
+    }
+  }
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.textContent = value;
+  } else {
+    console.warn(`id="${id}" 요소가 없습니다.`);
   }
 }
 
