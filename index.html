@@ -1,32 +1,147 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>일보 위젯 테스트</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>아크라시아 일보</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="paper">
-    <div class="topline">NOTION WIDGET TEST</div>
-    <h1>에스이호이테 일보</h1>
-    <p class="date">2026-04-22</p>
+  <div class="paper-shell">
+    <main class="paper">
+      <header class="masthead">
+        <div class="masthead-top">
+          <span class="edition">VOL. 01</span>
+          <span class="paper-note">ARKRASIA DAILY JOURNAL</span>
+          <span class="price">NOT FOR SALE</span>
+        </div>
 
-    <div class="headline">
-      오늘의 위젯 표시 테스트
-    </div>
+        <h1 class="paper-title">아크라시아 일보</h1>
 
-    <div class="columns">
-      <div class="article">
-        <h2>1면</h2>
-        <p>노션에 웹페이지가 정상적으로 뜨는지 확인하는 테스트입니다.</p>
-      </div>
+        <div class="masthead-bottom">
+          <span>2026. 04. 22 수요일</span>
+          <span>모험 · 수집 · 일정 · 캐릭터 관리 특집</span>
+          <span>Notion Widget Edition</span>
+        </div>
+      </header>
 
-      <div class="article">
-        <h2>2면</h2>
-        <p>이게 보이면 GitHub Pages와 Notion embed 연결은 성공입니다.</p>
-      </div>
-    </div>
+      <section class="hero">
+        <div class="hero-main">
+          <p class="section-label">HEADLINE</p>
+          <h2 class="hero-title">오늘의 아크라시아 일정과 수집 진행 현황 한눈에 보기</h2>
+          <p class="hero-summary">
+            오늘 열리는 주요 콘텐츠, 수집품 진행도, 해야 할 숙제와 메모를
+            한 장의 신문처럼 정리해 보여주는 테스트 위젯입니다. 지금은 더미 데이터로
+            구성되어 있지만, 이후 JSON과 연결하면 자동 갱신 구조로 확장할 수 있습니다.
+          </p>
+        </div>
+
+        <aside class="hero-side">
+          <div class="brief-box">
+            <p class="brief-title">오늘의 속보</p>
+            <ul>
+              <li>모험섬 등장 일정 확인 필요</li>
+              <li>에포나/주간 숙제 리셋 체크</li>
+              <li>수집품 체크박스 반영 예정</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <section class="content-grid">
+        <article class="news-column">
+          <p class="column-tag">01 TODAY</p>
+          <h3 class="column-title">오늘의 콘텐츠 브리핑</h3>
+          <p>
+            오늘 확인해야 할 콘텐츠를 한쪽에 모아 보여주는 영역입니다.
+            모험섬, 카오스게이트, 필드보스, 일정성 콘텐츠를 짧은 기사 형식으로
+            정리하면 가장 신문처럼 보입니다.
+          </p>
+          <p>
+            실제 적용 시에는 “오늘의 모험섬”, “오늘의 캘린더 이벤트”, “우선 순위”
+            같은 문장을 자동 생성해서 넣으면 됩니다. 너무 많은 정보를 한 칸에 몰아넣으면
+            보기 싫어지므로, 여기에는 핵심만 넣는 게 맞습니다.
+          </p>
+
+          <div class="mini-card">
+            <p class="mini-card-label">CHECK</p>
+            <p class="mini-card-text">
+              오늘 목표: 모험섬 1회, 일일 숙제 점검, 이벤트 입장 시간 확인
+            </p>
+          </div>
+        </article>
+
+        <article class="news-column">
+          <p class="column-tag">02 COLLECTION</p>
+          <h3 class="column-title">수집품 진행도 요약</h3>
+          <p>
+            모코코, 섬의 마음, 거인의 심장, 위대한 미술품 같은 수집품 진행 현황을
+            요약하는 칸입니다. 숫자만 보여주지 말고, 달성률이나 남은 개수까지 같이
+            적어주는 편이 더 보기 좋습니다.
+          </p>
+
+          <div class="stat-list">
+            <div class="stat-item">
+              <span class="stat-name">모코코</span>
+              <span class="stat-value">1200 / 1300</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-name">섬의 마음</span>
+              <span class="stat-value">71 / 98</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-name">거인의 심장</span>
+              <span class="stat-value">13 / 15</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-name">오르페우스의 별</span>
+              <span class="stat-value">7 / 8</span>
+            </div>
+          </div>
+
+          <p>
+            나중에는 이 영역을 노션 DB나 JSON 파일에서 읽어오게 바꾸면 됩니다.
+            지금은 디자인 확인용 더미 수치만 넣어둔 상태입니다.
+          </p>
+        </article>
+
+        <article class="news-column">
+          <p class="column-tag">03 MEMO</p>
+          <h3 class="column-title">메모와 할 일</h3>
+          <p>
+            이 칸은 자유 메모용입니다. 캐릭터별 해야 할 일, 이번 주 목표,
+            남은 재료, 골드 사용 계획, 또는 그냥 오늘 기억할 내용을 적어도 됩니다.
+          </p>
+
+          <blockquote class="quote-box">
+            “노션 위젯 테스트 성공. 이제 정적 페이지를 데이터 기반 페이지로
+            바꾸면 된다.”
+          </blockquote>
+
+          <ul class="todo-list">
+            <li>GitHub Pages 배포 유지 확인</li>
+            <li>daily.json 연결</li>
+            <li>파이썬으로 JSON 생성</li>
+            <li>노션용 자동 갱신 구조 설계</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="bottom-strip">
+        <div class="bottom-box">
+          <p class="bottom-label">NOTICE</p>
+          <p>현재 화면은 디자인 테스트용입니다. 이후 실제 로아 데이터와 연결 예정.</p>
+        </div>
+        <div class="bottom-box">
+          <p class="bottom-label">UPDATE</p>
+          <p>마지막 갱신: 2026-04-22 09:00</p>
+        </div>
+        <div class="bottom-box">
+          <p class="bottom-label">SOURCE</p>
+          <p>Lost Ark Open API + Notion DB + Local JSON</p>
+        </div>
+      </section>
+    </main>
   </div>
 </body>
 </html>
