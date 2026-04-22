@@ -1,54 +1,197 @@
 import json
+import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
-def build_data():
-    today = datetime.now().strftime("%Y-%m-%d")
+import requests
 
-    data = {
-        "title": "아크라시아 일보",
-        "date": today,
-        "headline": f"{today} 오늘의 아크라시아 일정",
-        "summary": "자동 생성된 테스트 데이터입니다.",
 
-        "columns": [
-            {
-                "tag": "01 TODAY",
-                "title": "오늘의 콘텐츠",
-                "body": "자동 생성된 콘텐츠 영역입니다.\n이 부분은 나중에 로아 API로 교체됩니다.",
-                "highlight": f"생성 시각: {datetime.now().strftime('%H:%M:%S')}"
-            },
-            {
-                "tag": "02 COLLECTION",
-                "title": "수집품",
-                "stats": [
-                    {"name": "모코코", "value": "1200 / 1300"},
-                    {"name": "섬마", "value": "71 / 98"}
-                ],
-                "body": "현재는 더미 데이터"
-            },
-            {
-                "tag": "03 MEMO",
-                "title": "메모",
-                "todos": [
-                    "자동 업데이트 테스트",
-                    "GitHub Actions 정상 작동 확인"
-                ],
-                "quote": "이건 자동 생성된 문장이다"
-            }
-        ],
+API_URL = "https://developer-lostark.game.onstove.com/gamecontents/calendar"
+TIMEZONE = ZoneInfo("Asia/Seoul")
 
-        "footer": [
-            f"UPDATE: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
-            "AUTO GENERATED",
-            "GITHUB ACTIONS"
-        ]
+
+def get_api_key() -> str:
+    api_key = os.environ.get("LOA_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("LOA_API_KEY 환경 변수가 비어 있습니다.")
+    return api_key
+
+
+def fetch_calendar(api_key: str) -> list:
+    headers = {
+        "Authorization": f"bearer {api_key}",
+        "Accept": "application/json",
     }
 
-    Path("daily.json").write_text(
-        json.dumps(data, ensure_ascii=False, indent=2),
+    response = requests.get(API_URL, headers=headers, timeout=20)
+    response.raise_for_status()
+    data = response.json()
+
+    if not isinstance(data, list):
+        raise RuntimeError("캘린더 응답 형식이 예상과 다릅니다.")
+
+    return data
+
+
+def parse_today_items(calendar_data: list, today_str: str) -> tuple[list[str], list[str]]:
+    islands: list[str] = []
+    events: list[str] = []
+
+    for item in calendar_data:
+        start_times = item.get("StartTimes") or []
+        if not isinstance(start_times, list):
+            continue
+
+        is_today = any(today_str in str(start_time) for start_time in start_times)
+        if not is_today:
+            continue
+
+        name = str(item.get("ContentsName", "이름 없는 콘텐츠")).strip()
+        if not name:
+            name = "이름 없는 콘텐츠"
+
+        if "섬" in name:
+            islands.append(name)
+        else:
+            events.append(name)
+
+    islands = unique_keep_order(islands)
+    events = unique_keep_order(events)
+
+    return islands, events
+
+
+def unique_keep_order(items: list[str]) -> list[str]:
+    seen = set()
+    result = []
+
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        result.append(item)
+
+    return result
+
+
+def build_payload() -> dict:
+    now = datetime.now(TIMEZONE)
+    today_str = now.strftime("%Y-%m-%d")
+
+    try:
+        api_key = get_api_key()
+        calendar_data = fetch_calendar(api_key)
+        islands, events = parse_today_items(calendar_data, today_str)
+
+        island_text = "\n".join(islands) if islands else "오늘 표시된 섬 콘텐츠 없음"
+        event_text = "\n".join(events[:8]) if events else "오늘 표시된 주요 이벤트 없음"
+
+        briefs = []
+        if islands:
+            briefs.append(f"오늘 섬 관련 콘텐츠 {len(islands)}건")
+        else:
+            briefs.append("오늘 섬 관련 콘텐츠 없음")
+
+        if events:
+            briefs.append(f"오늘 기타 이벤트 {len(events)}건")
+        else:
+            briefs.append("오늘 기타 이벤트 없음")
+
+        briefs.append("데이터 출처: Lost Ark Open API")
+
+        payload = {
+            "title": "아크라시아 일보",
+            "date": today_str,
+            "subhead": "모험 · 일정 · 수집",
+            "headline": f"{today_str} 오늘의 아크라시아 일정",
+            "summary": "공식 캘린더 API 기준으로 오늘의 섬 콘텐츠와 주요 이벤트를 자동 요약합니다.",
+            "briefs": briefs,
+            "columns": [
+                {
+                    "tag": "01 TODAY",
+                    "title": "오늘의 섬 콘텐츠",
+                    "body": island_text,
+                    "highlight": "공식 캘린더 API 기준"
+                },
+                {
+                    "tag": "02 EVENTS",
+                    "title": "주요 이벤트",
+                    "body": event_text,
+                    "extra_body": "표시 수가 많을 경우 상위 몇 개만 요약합니다."
+                },
+                {
+                    "tag": "03 MEMO",
+                    "title": "메모",
+                    "quote": "자동 갱신 구조 연결 완료.",
+                    "todos": [
+                        "노션 임베드 새로고침 확인",
+                        "daily.json 최신 반영 확인",
+                        "추후 수집품/노션 DB 연결"
+                    ]
+                }
+            ],
+            "footer": [
+                f"UPDATE: {now.strftime('%Y-%m-%d %H:%M %Z')}",
+                "SOURCE: LOST ARK OPEN API",
+                "AUTO GENERATED BY GITHUB ACTIONS"
+            ]
+        }
+
+        return payload
+
+    except Exception as exc:
+        error_message = str(exc)
+
+        return {
+            "title": "아크라시아 일보",
+            "date": today_str,
+            "subhead": "오류 상태",
+            "headline": "오늘의 데이터를 불러오지 못했습니다.",
+            "summary": "API 키, 응답 형식, 또는 GitHub Actions 실행 상태를 점검해야 합니다.",
+            "briefs": [
+                "자동 생성 실패",
+                "Actions 로그 확인 필요",
+                "daily.json은 오류 상태로 갱신됨"
+            ],
+            "columns": [
+                {
+                    "tag": "01 ERROR",
+                    "title": "오류 메시지",
+                    "body": error_message
+                },
+                {
+                    "tag": "02 CHECK",
+                    "title": "확인할 것",
+                    "todos": [
+                        "LOA_API_KEY 시크릿 등록 여부",
+                        "update.yml env 연결 여부",
+                        "API 응답 상태 코드 확인"
+                    ]
+                },
+                {
+                    "tag": "03 STATUS",
+                    "title": "현재 상태",
+                    "quote": "오류가 나도 위젯은 죽지 않고 실패 상태를 보여줍니다."
+                }
+            ],
+            "footer": [
+                f"UPDATE: {now.strftime('%Y-%m-%d %H:%M %Z')}",
+                "SOURCE: ERROR FALLBACK",
+                "AUTO GENERATED"
+            ]
+        }
+
+
+def main() -> None:
+    payload = build_payload()
+    output_path = Path("daily.json")
+    output_path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
         encoding="utf-8"
     )
+    print(f"saved: {output_path.resolve()}")
+
 
 if __name__ == "__main__":
-    build_data()
+    main()
