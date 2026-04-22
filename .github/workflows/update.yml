@@ -1,0 +1,30 @@
+name: Update Daily JSON
+
+on:
+  schedule:
+    - cron: "0 23 * * *"  # 한국 기준 오전 8시
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 가져오기
+        uses: actions/checkout@v3
+
+      - name: 파이썬 설치
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: 스크립트 실행
+        run: python build_data.py
+
+      - name: 변경사항 커밋
+        run: |
+          git config --global user.name "auto-bot"
+          git config --global user.email "auto@bot.com"
+          git add daily.json
+          git commit -m "auto update daily.json" || echo "no changes"
+          git push
