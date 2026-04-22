@@ -2,68 +2,154 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>아크라시아 일보</title>
+  <meta name="viewport" content="width=1400, initial-scale=1.0" />
+  <title>예스이호이테 일보</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="paper-shell">
-    <main class="paper">
-      <header class="masthead">
-        <div class="masthead-top">
-          <span class="edition">VOL. 01</span>
-          <span class="paper-note">NOIHOITE CHRONICLE</span>
-          <span class="price">NOT FOR SALE</span>
-        </div>
-
-        <h1 id="title" class="paper-title">로딩 중...</h1>
-
-        <div class="masthead-bottom">
-          <span id="date">날짜 로딩 중...</span>
-          <span id="subhead">모험 · 일정 · 캐릭터</span>
-          <span>Arkrasia Private Edition</span>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div class="hero-main">
-          <p class="section-label">HEADLINE</p>
-          <h2 id="headline" class="hero-title">헤드라인 로딩 중...</h2>
-          <p id="summary" class="hero-summary">요약 로딩 중...</p>
-        </div>
-
-        <aside class="hero-side">
-          <div class="brief-box">
-            <p class="brief-title">오늘의 속보</p>
-            <ul id="brief-list">
-              <li>데이터 로딩 중...</li>
-            </ul>
-          </div>
-        </aside>
+  <div class="paper">
+    <!-- 상단 광고/배너 -->
+    <header class="top-banner">
+      <section class="banner-box left-banner">
+        <p class="banner-kicker">모험가를 위한 특급 정보!</p>
+        <h2 class="banner-title">칭호도 스타일이다!</h2>
+        <p class="banner-copy">오늘의 당신을 완성하는 단 하나의 칭호</p>
+        <div class="banner-cta">지금 바로 확인하기 ▶</div>
       </section>
 
-      <section id="columns" class="content-grid"></section>
+      <section class="logo-banner">
+        <h1 id="paperTitle">예스이호이테 일보</h1>
+        <p class="logo-sub">✦ 아크라시아 모험가를 위한 생활 밀착형 신문 ✦</p>
+      </section>
 
-      <section class="bottom-strip newspaper-footer">
-        <div class="footer-col">
-          <p class="footer-head">노이호테 속보</p>
-          <p>“루페온 항구, 어제 밤 정체불명의 빛 관측”</p>
-          <p>“베른 북부 상인, 갑작스러운 금값 폭등 경고”</p>
+      <section class="banner-box right-banner">
+        <p class="banner-kicker">★ 데일리 리추얼 보상 ★</p>
+        <h2 class="banner-title small">오늘도 아크라시아에서 빛나는 하루 되세요!</h2>
+        <p class="banner-copy">모험은 습관, 보상은 덤!</p>
+        <div class="banner-cta">오늘의 보상 확인 ▶</div>
+      </section>
+    </header>
+
+    <!-- 발행줄 -->
+    <section class="meta-line">
+      <span id="metaLeft">VOL. 2026-04-15 WED</span>
+      <span id="metaCenter">발행처 | 아크라시아 연합 정보국</span>
+      <span id="metaRight">발행일 | 2026.04.15 (수)</span>
+    </section>
+
+    <!-- 본문 상단 -->
+    <main class="main-grid">
+      <!-- 좌측 대형 기사 -->
+      <section class="main-article-left">
+        <h2 id="mainHeadline" class="main-headline">
+          이제 칭호도 스타일이다! 대신 파이썬을쓰는자
+        </h2>
+
+        <div class="left-article-grid">
+          <div class="character-card">
+            <div class="character-image-wrap">
+              <img id="characterImage" src="https://placehold.co/420x560?text=Character" alt="캐릭터 이미지" />
+            </div>
+            <div class="character-nameplate">
+              <div id="characterNameplate">파이썬을쓰는자</div>
+              <div id="characterSubplate">루페온 | 도화가 | Lv.70</div>
+            </div>
+          </div>
+
+          <div class="spec-article">
+            <h3 class="article-subtitle">타이틀코어 문화 확산</h3>
+
+            <div class="spec-columns">
+              <div class="spec-block">
+                <dl id="profileStats" class="spec-list"></dl>
+              </div>
+
+              <div class="spec-block">
+                <dl id="equipmentStats" class="spec-list"></dl>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <section class="lookbook-section">
+              <div class="lookbook-title-row">
+                <h3>오늘의 LOOKBOOK</h3>
+                <p>아바타 시세 정보 (거래소 기준 수동 입력)</p>
+              </div>
+
+              <table class="lookbook-table">
+                <thead>
+                  <tr>
+                    <th>아바타 이름</th>
+                    <th>부위</th>
+                    <th>색상</th>
+                    <th>시세 (평균가)</th>
+                    <th>최저가</th>
+                  </tr>
+                </thead>
+                <tbody id="lookbookTableBody"></tbody>
+              </table>
+
+              <p class="table-note">
+                * 시세는 수동 입력 기준이며, 장터 시세는 변동될 수 있습니다.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- 우측 기사 -->
+      <section class="main-article-right">
+        <h2 id="sideHeadline" class="side-headline">
+          [단독] 식목일 맞이! 오늘의 모험섬 핫이슈
+        </h2>
+
+        <div class="island-image-wrap">
+          <img id="islandImage" src="https://placehold.co/520x260?text=Island" alt="모험섬 이미지" />
         </div>
 
-        <div class="footer-col">
-          <p class="footer-head">광고</p>
-          <p>[전단] 실리안 인증 정예 파티 모집</p>
-          <p>모험섬 · 카게 · 군단장 / 경험자 우대</p>
+        <div class="right-section">
+          <h3>오늘의 모험섬</h3>
+          <div id="todayIslands" class="bullet-columns"></div>
         </div>
 
-        <div class="footer-col">
-          <p class="footer-head">단신</p>
-          <p>“모험가들 사이에서 ‘오늘 안 하면 손해’라는 말 확산”</p>
-          <p>“카제로스 관련 루머… 사실 여부 불명”</p>
+        <div class="right-section">
+          <h3>아직 가지 않은 레이드들</h3>
+          <ul id="raidList" class="raid-list"></ul>
+        </div>
+
+        <div class="quote-card">
+          <p id="quoteText">
+            모험은 아직 끝나지 않았다.<br />
+            아직 가보지 않은 곳이<br />
+            아크라시아의 절반이다.
+          </p>
+          <span>- 익명의 모험가 -</span>
         </div>
       </section>
     </main>
+
+    <!-- 하단 벼락장터 -->
+    <section class="market-strip">
+      <h2 class="market-title">⚡ 벼락장터 ⚡</h2>
+
+      <div class="market-grid">
+        <article class="market-card">
+          <h3>⚡ 벼락장터 - 모험섬 소식</h3>
+          <div id="marketIslandNews" class="market-body"></div>
+        </article>
+
+        <article class="market-card">
+          <h3>⚡ 벼락장터 - 이벤트 속보</h3>
+          <div id="marketEventNews" class="market-body"></div>
+        </article>
+
+        <article class="market-card">
+          <h3>⚡ 벼락장터 - 길드 오늘도 대환장 광고</h3>
+          <div id="guildAdNews" class="market-body"></div>
+        </article>
+      </div>
+    </section>
   </div>
 
   <script src="script.js"></script>
