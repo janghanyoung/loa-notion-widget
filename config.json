@@ -5,14 +5,19 @@
   "characterImage": "https://placehold.co/420x560?text=Character",
   "islandImage": "https://placehold.co/520x260?text=Island",
   "lookbook": [],
-  "remainingRaids": [],
+  "remainingRaids": [
+    "카제로스 레이드",
+    "에기르",
+    "베히모스",
+    "아브렐슈드"
+  ],
   "marketIslandNews": [
-    "오늘의 모험섬! 놓치지 마세요!"
+    "오늘의 모험섬 확인 필요"
   ],
   "marketEventNews": [
-    "오늘의 이벤트 확인 필요!"
+    "이벤트 보상 확인 필요"
   ],
   "guildAdNews": [
-    "길드 오늘도 대환장 정상 영업 중!"
+    "길드 오늘도 대환장 정상 영업 중"
   ]
 }
