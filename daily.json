@@ -1,47 +1,60 @@
 {
   "paperTitle": "예스이호이테 일보",
-  "metaLeft": "VOL. 2026-04-24",
+  "metaLeft": "VOL. 2026-04-24 ERROR",
   "metaCenter": "발행처 | 오류 상태",
-  "metaRight": "발행일 | 2026-04-24",
+  "metaRight": "발행일 | 2026.04.24",
   "mainHeadline": "오늘의 신문을 정상적으로 불러오지 못했습니다.",
   "sideHeadline": "[속보] 데이터 로딩 실패",
   "character": {
-    "image": "https://placehold.co/420x560?text=Error",
+    "image": "https://placehold.co/420x560?text=ERROR",
     "nameplate": "오류 상태",
-    "subplate": "Actions 로그를 확인하세요"
+    "subplate": "Expecting value: line 2 column 1 (char 2)"
   },
   "profileStats": [
     {
-      "label": "오류",
+      "label": "ERROR",
       "value": "Expecting value: line 2 column 1 (char 2)"
     }
   ],
   "equipmentStats": [
     {
-      "label": "확인할 것",
-      "value": "LOA_API_KEY / characterName / API 응답"
+      "label": "확인 1",
+      "value": "LOA_API_KEY Secret 이름"
+    },
+    {
+      "label": "확인 2",
+      "value": "config.json characterName"
+    },
+    {
+      "label": "확인 3",
+      "value": "GitHub Actions 로그"
+    },
+    {
+      "label": "확인 4",
+      "value": "캐릭터명 URL 인코딩 여부"
     }
   ],
   "lookbook": [],
   "islandArticle": {
-    "image": "https://placehold.co/520x260?text=Error",
+    "image": "https://placehold.co/520x260?text=ERROR",
     "todayIslands": [
-      "오늘의 모험섬 데이터를 불러오지 못했습니다."
+      "Expecting value: line 2 column 1 (char 2)"
     ],
     "remainingRaids": [
-      "config.json 및 Actions 로그를 확인하세요."
+      "Actions 로그에서 daily.json 생성 단계 확인"
     ],
-    "quote": "오류가 나도 위젯은 죽지 않고\n실패 상태를 보여준다."
+    "quote": "Expecting value: line 2 column 1 (char 2)"
   },
   "market": {
     "island": [
-      "오류 발생"
+      "오류 발생",
+      "Expecting value: line 2 column 1 (char 2)"
     ],
     "events": [
-      "Actions 로그 확인 필요"
+      "LOA_API_KEY / characterName / API 응답 확인"
     ],
     "guild": [
-      "시크릿 및 설정값 점검"
+      "config.json과 update.yml을 확인하세요"
     ]
   }
 }
